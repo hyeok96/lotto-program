@@ -1,7 +1,10 @@
 package com.timber.lotto;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("lotto");
+
+    public static void main(String[] args) throws IOException {
+       LottoProgram lottoProgram = new LottoProgram();
+       lottoProgram.start();
     }
 }
