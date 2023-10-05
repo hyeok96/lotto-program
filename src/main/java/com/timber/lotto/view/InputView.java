@@ -3,6 +3,7 @@ package com.timber.lotto.view;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,9 +17,18 @@ public class InputView {
         return Integer.parseInt(br.readLine());
     }
 
-    public int inputManualLottoNum() throws IOException {
+    public int inputManualLottoNum(BigDecimal payment, int lottoPrice ) throws IOException {
         System.out.println("수동으로 구매할 로또 수를 입력해 주세요");
-        return Integer.parseInt(br.readLine());
+        int numberOfLotto = Integer.parseInt(br.readLine());
+        try {
+            if(lottoPrice * numberOfLotto > new BigDecimal(String.valueOf(payment)).intValue() ) {
+                throw new Exception();
+            }
+
+        } catch (Exception e) {
+            System.out.println("금액을 초과했습니다.");
+        }
+        return numberOfLotto;
     }
 
     public List<List<Integer>> inputManualLottos(int manualLottoNum) throws IOException {

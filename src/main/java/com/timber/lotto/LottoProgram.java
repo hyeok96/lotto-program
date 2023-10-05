@@ -14,7 +14,7 @@ public class LottoProgram {
 
     public void start() throws IOException {
         Money money = new Money(inputView.inputMoney());
-        int manualLottoNum = inputView.inputManualLottoNum();
+        int manualLottoNum = inputView.inputManualLottoNum(money.getValue(),  Lotto.LOTTO_PRICE);
         money.spend( manualLottoNum * Lotto.LOTTO_PRICE);
     }
 }
