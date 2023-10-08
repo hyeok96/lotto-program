@@ -17,11 +17,11 @@ public class InputView {
         return Integer.parseInt(br.readLine());
     }
 
-    public int inputManualLottoNum(BigDecimal payment, int lottoPrice ) throws IOException {
+    public int inputManualLottoNum(BigDecimal payment, int lottoPrice) throws IOException {
         System.out.println("수동으로 구매할 로또 수를 입력해 주세요");
         int numberOfLotto = Integer.parseInt(br.readLine());
         try {
-            if(lottoPrice * numberOfLotto > new BigDecimal(String.valueOf(payment)).intValue() ) {
+            if (lottoPrice * numberOfLotto > new BigDecimal(String.valueOf(payment)).intValue()) {
                 throw new Exception();
             }
 
@@ -41,21 +41,13 @@ public class InputView {
     }
 
     private List<Integer> inputManualLotto() throws IOException {
-        List<Integer> lotto = new ArrayList<>();
+        List<Integer> numbers = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(br.readLine(), ",");
         while (st.hasMoreTokens()) {
-            try {
-                if (lotto.size() == 6) {
-                    throw new Exception();
-                }
-                lotto.add(Integer.parseInt(st.nextToken().trim()));
-
-            } catch (Exception e) {
-                System.out.println("6자리만 입력해 주세요");
-            };
+            numbers.add(Integer.parseInt(st.nextToken().trim()));
         }
-        return lotto;
-}
+        return numbers;
+    }
 
 
 }
