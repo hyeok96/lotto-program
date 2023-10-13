@@ -1,10 +1,7 @@
 package com.timber.lotto;
 
-import com.timber.lotto.domain.lotto.AutoLottoGenerator;
-import com.timber.lotto.domain.lotto.Lotto;
+import com.timber.lotto.domain.lotto.*;
 import com.timber.lotto.domain.Money;
-import com.timber.lotto.domain.lotto.LottoNumber;
-import com.timber.lotto.domain.lotto.ManualLottoGenerator;
 import com.timber.lotto.view.InputView;
 import com.timber.lotto.view.OutputView;
 
@@ -29,6 +26,9 @@ public class LottoProgram {
 
         System.out.println(allLottos);
 
+        List<Integer> lastWinnigLottoNumbers = inputView.inputWinningLotto();
+        int bonusBall = inputView.inputBonusBall();
+        WinningLotto lastWinningLotto = getwinningLotto(lastWinnigLottoNumbers, bonusBall);
     }
 
     private List<Lotto> getManualLottos(int manualLottoNum) throws IOException {
@@ -46,6 +46,10 @@ public class LottoProgram {
             automaticLottos.add(new Lotto(new AutoLottoGenerator()));
         }
         return automaticLottos;
+    }
+
+    private WinningLotto getwinningLotto(List<Integer> lastWinnigLottoNumbers, int bonusBall) {
+        return new WinningLotto(new ManualLottoGenerator(lastWinnigLottoNumbers), new LottoNumber(bonusBall));
     }
 }
 

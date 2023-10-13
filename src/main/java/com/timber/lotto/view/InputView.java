@@ -1,5 +1,8 @@
 package com.timber.lotto.view;
 
+import com.timber.lotto.domain.lotto.Lotto;
+import com.timber.lotto.domain.lotto.LottoNumber;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -49,5 +52,19 @@ public class InputView {
         return numbers;
     }
 
+    public List<Integer> inputWinningLotto() throws IOException {
+        List<Integer> numbers = new ArrayList<>();
+        System.out.println("지난 주 당첨 번호를 입력해 주세요");
+        StringTokenizer st = new StringTokenizer(br.readLine(), ",");
+        while (st.hasMoreTokens()) {
+            numbers.add(Integer.parseInt(st.nextToken().trim()));
+        }
+        return numbers;
+    }
+
+    public int inputBonusBall() throws IOException {
+        System.out.println("보너스 볼을 입력해 주세요.");
+        return Integer.parseInt(br.readLine());
+    }
 
 }
