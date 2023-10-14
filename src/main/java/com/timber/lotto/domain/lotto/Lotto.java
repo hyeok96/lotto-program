@@ -1,9 +1,10 @@
 package com.timber.lotto.domain.lotto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Lotto {
-    public static final int LOTTO_PRICE = 1000;
+    public static final BigDecimal LOTTO_PRICE = new BigDecimal(1000);
     public static final int NUMBER_SIZE = 6;
 
     private final List<LottoNumber> numbers;

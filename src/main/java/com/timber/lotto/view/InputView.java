@@ -1,15 +1,11 @@
 package com.timber.lotto.view;
 
-import com.timber.lotto.domain.lotto.Lotto;
-import com.timber.lotto.domain.lotto.LottoNumber;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class InputView {
@@ -20,17 +16,14 @@ public class InputView {
         return Integer.parseInt(br.readLine());
     }
 
-    public int inputManualLottoNum(BigDecimal payment, int lottoPrice) throws IOException {
+    public int inputManualLottoNum(BigDecimal payment, BigDecimal lottoPrice) throws IllegalArgumentException, IOException {
         System.out.println("수동으로 구매할 로또 수를 입력해 주세요");
         int numberOfLotto = Integer.parseInt(br.readLine());
-        try {
-            if (lottoPrice * numberOfLotto > new BigDecimal(String.valueOf(payment)).intValue()) {
-                throw new Exception();
-            }
 
-        } catch (Exception e) {
-            System.out.println("금액을 초과했습니다.");
+        if (payment.compareTo(lottoPrice.multiply(new BigDecimal(numberOfLotto))) < 0) {
+            throw new IllegalArgumentException("금액을 초과했습니다.");
         }
+
         return numberOfLotto;
     }
 

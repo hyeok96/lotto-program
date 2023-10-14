@@ -1,6 +1,7 @@
 package com.timber.lotto.domain;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Money {
     private BigDecimal value;
@@ -15,5 +16,13 @@ public class Money {
 
     public void spend(int money) {
         this.value = value.subtract(new BigDecimal(money));
+    }
+
+    public void spend(BigDecimal money) {
+        this.value = value.subtract(money);
+    }
+
+    public int count(BigDecimal price) {
+        return value.divide(price, RoundingMode.FLOOR).intValue();
     }
 }

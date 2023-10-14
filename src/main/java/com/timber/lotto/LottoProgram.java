@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class LottoProgram {
 
@@ -17,39 +18,44 @@ public class LottoProgram {
 
     public void start() throws IOException {
         Money money = new Money(inputView.inputMoney());
-        int manualLottoNum = inputView.inputManualLottoNum(money.getValue(), Lotto.LOTTO_PRICE);
-        money.spend(manualLottoNum * Lotto.LOTTO_PRICE);
 
+        // manual
+        int manualLottoNum = inputView.inputManualLottoNum(money.getValue(), Lotto.LOTTO_PRICE);
+        money.spend(Lotto.LOTTO_PRICE.multiply(BigDecimal.valueOf(manualLottoNum)));
+
+        // auto
+        int autoLottoNum = money.count(Lotto.LOTTO_PRICE);
+        money.spend(Lotto.LOTTO_PRICE.multiply(BigDecimal.valueOf(autoLottoNum)));
+
+        // sum
         List<Lotto> allLottos = new ArrayList<>();
         allLottos.addAll(getManualLottos(manualLottoNum));
-        allLottos.addAll(getAutomaticLottos(money.getValue()));
+        allLottos.addAll(getAutoLottos(autoLottoNum));
 
         System.out.println(allLottos);
 
-        List<Integer> lastWinnigLottoNumbers = inputView.inputWinningLotto();
+        List<Integer> lastWinningLottoNumbers = inputView.inputWinningLotto();
         int bonusBall = inputView.inputBonusBall();
-        WinningLotto lastWinningLotto = getwinningLotto(lastWinnigLottoNumbers, bonusBall);
+        WinningLotto lastWinningLotto = getwinningLotto(lastWinningLottoNumbers, bonusBall);
     }
 
-    private List<Lotto> getManualLottos(int manualLottoNum) throws IOException {
-        List<List<Integer>> inputManualLottos = inputView.inputManualLottos(manualLottoNum);
+    private List<Lotto> getManualLottos(int count) throws IOException {
+        List<List<Integer>> inputManualLottos = inputView.inputManualLottos(count);
         return inputManualLottos.stream()
                 .map(ManualLottoGenerator::new)
                 .map(Lotto::new)
                 .toList();
     }
 
-    private List<Lotto> getAutomaticLottos(BigDecimal money) {
-        List<Lotto> automaticLottos = new ArrayList<>();
-        int numberOfAutomaticLotto = new BigDecimal(String.valueOf(money)).intValue() / Lotto.LOTTO_PRICE;
-        for (int i = 0; i < numberOfAutomaticLotto; i++) {
-            automaticLottos.add(new Lotto(new AutoLottoGenerator()));
+    private List<Lotto> getAutoLottos(int count) {
+        List<Lotto> autoLottos = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            autoLottos.add(new Lotto(new AutoLottoGenerator()));
         }
-        return automaticLottos;
+        return autoLottos;
     }
 
     private WinningLotto getwinningLotto(List<Integer> lastWinnigLottoNumbers, int bonusBall) {
         return new WinningLotto(new ManualLottoGenerator(lastWinnigLottoNumbers), new LottoNumber(bonusBall));
     }
 }
-
