@@ -1,7 +1,7 @@
 package com.timber.lotto;
 
-import com.timber.lotto.domain.lotto.*;
 import com.timber.lotto.domain.Money;
+import com.timber.lotto.domain.lotto.*;
 import com.timber.lotto.view.InputView;
 import com.timber.lotto.view.OutputView;
 
@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class LottoProgram {
 
@@ -28,15 +27,16 @@ public class LottoProgram {
         money.spend(Lotto.LOTTO_PRICE.multiply(BigDecimal.valueOf(autoLottoNum)));
 
         // sum
-        List<Lotto> allLottos = new ArrayList<>();
-        allLottos.addAll(getManualLottos(manualLottoNum));
-        allLottos.addAll(getAutoLottos(autoLottoNum));
+        List<Lotto> lottos = new ArrayList<>();
+        lottos.addAll(getManualLottos(manualLottoNum));
+        lottos.addAll(getAutoLottos(autoLottoNum));
 
-        System.out.println(allLottos);
+        outputView.printNums(manualLottoNum, autoLottoNum);
+        outputView.printLottos(lottos);
 
-        List<Integer> lastWinningLottoNumbers = inputView.inputWinningLotto();
+        List<Integer> winningLottoNumbers = inputView.inputWinningLotto();
         int bonusBall = inputView.inputBonusBall();
-        WinningLotto lastWinningLotto = getwinningLotto(lastWinningLottoNumbers, bonusBall);
+        WinningLotto winningLotto = getwinningLotto(winningLottoNumbers, bonusBall);
     }
 
     private List<Lotto> getManualLottos(int count) throws IOException {
@@ -55,7 +55,7 @@ public class LottoProgram {
         return autoLottos;
     }
 
-    private WinningLotto getwinningLotto(List<Integer> lastWinnigLottoNumbers, int bonusBall) {
-        return new WinningLotto(new ManualLottoGenerator(lastWinnigLottoNumbers), new LottoNumber(bonusBall));
+    private WinningLotto getwinningLotto(List<Integer> winningLottoNumbers, int bonusBall) {
+        return new WinningLotto(new ManualLottoGenerator(winningLottoNumbers), new LottoNumber(bonusBall));
     }
 }

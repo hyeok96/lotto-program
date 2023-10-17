@@ -1,7 +1,9 @@
 package com.timber.lotto.domain.lotto;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Lotto {
     public static final BigDecimal LOTTO_PRICE = new BigDecimal(1000);
@@ -10,11 +12,20 @@ public class Lotto {
     private final List<LottoNumber> numbers;
 
     public Lotto(LottoGenerator lottoGenerator) {
-
         this.numbers = lottoGenerator.generate();
-        if(numbers.size() != NUMBER_SIZE) {
+        if (numbers.size() != NUMBER_SIZE) {
             throw new IllegalStateException(String.format("%d자리가 아닙니다", NUMBER_SIZE));
         }
+    }
+
+    public int compare(Lotto lotto) {
+        Set<LottoNumber> intersect = new HashSet<>(this.numbers);
+        intersect.retainAll(lotto.numbers);
+        return intersect.size();
+    }
+
+    public boolean contains(LottoNumber number) {
+        return numbers.contains(number);
     }
 
     @Override
