@@ -24,7 +24,7 @@ public class LottoProgram {
         allLottos.addAll(getManualLottos(manualLottoNum));
         allLottos.addAll(getAutomaticLottos(money.getValue()));
 
-        System.out.println(allLottos);
+        outputView.showLottos(allLottos);
 
         List<Integer> lastWinnigLottoNumbers = inputView.inputWinningLotto();
         int bonusBall = inputView.inputBonusBall();
