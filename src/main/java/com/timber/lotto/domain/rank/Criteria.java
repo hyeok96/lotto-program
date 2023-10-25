@@ -1,5 +1,7 @@
 package com.timber.lotto.domain.rank;
 
+import java.util.Objects;
+
 public class Criteria {
     private final int match;
     private final boolean bonus;
@@ -13,4 +15,16 @@ public class Criteria {
         return new Criteria(match, bonus);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Criteria criteria = (Criteria) o;
+        return match == criteria.match && bonus == criteria.bonus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(match, bonus);
+    }
 }
