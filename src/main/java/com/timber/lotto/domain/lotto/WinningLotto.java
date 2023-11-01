@@ -1,22 +1,29 @@
 package com.timber.lotto.domain.lotto;
 
+import com.timber.lotto.domain.rank.Criteria;
+
 import java.util.List;
 
 public class WinningLotto {
-    private final List<LottoNumber> winningNumbers;
+    private static final int BONUS_MATCH = 5;
+    private final Lotto lotto;
     private final LottoNumber bonusBall;
-
-    public List<LottoNumber> getWinningNumbers() {
-        return winningNumbers;
-    }
 
     public LottoNumber getBonusBall() {
         return bonusBall;
     }
 
     public WinningLotto(LottoGenerator lottoGenerator, LottoNumber bonusBall) {
-        this.winningNumbers = lottoGenerator.generate();
+        this.lotto = new Lotto(lottoGenerator);
         this.bonusBall = bonusBall;
+    }
+
+    public Criteria compare(Lotto lotto) {
+        int match = this.lotto.compare(lotto);
+        if (match == BONUS_MATCH) {
+            return Criteria.of(match, lotto.contains(bonusBall));
+        }
+        return Criteria.of(match, false);
     }
 
 }
