@@ -1,7 +1,10 @@
 package com.timber.lotto;
 
+import com.timber.lotto.domain.Statistics;
 import com.timber.lotto.domain.lotto.*;
 import com.timber.lotto.domain.Money;
+import com.timber.lotto.domain.rank.Criteria;
+import com.timber.lotto.domain.rank.Rank;
 import com.timber.lotto.view.InputView;
 import com.timber.lotto.view.OutputView;
 
@@ -29,6 +32,16 @@ public class LottoProgram {
         List<Integer> lastWinnigLottoNumbers = inputView.inputWinningLotto();
         int bonusBall = inputView.inputBonusBall();
         WinningLotto lastWinningLotto = getwinningLotto(lastWinnigLottoNumbers, bonusBall);
+
+        Statistics statistics = new Statistics();
+
+        for (Lotto lotto : allLottos) {
+            Criteria criteria = lastWinningLotto.compare(lotto);
+            Rank rank = Rank.of(criteria);
+            statistics.add(rank);
+        }
+
+        outputView.printStatistics(statistics);
     }
 
     private List<Lotto> getManualLottos(int manualLottoNum) throws IOException {

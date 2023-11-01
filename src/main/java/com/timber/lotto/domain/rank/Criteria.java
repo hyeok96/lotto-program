@@ -15,6 +15,14 @@ public class Criteria {
         return new Criteria(match, bonus);
     }
 
+    public int getMatch() {
+        return match;
+    }
+
+    public boolean isBonus() {
+        return bonus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

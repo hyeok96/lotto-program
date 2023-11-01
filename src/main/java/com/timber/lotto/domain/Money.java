@@ -3,7 +3,7 @@ package com.timber.lotto.domain;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Money {
+public class Money implements Comparable<Money> {
     private BigDecimal value;
 
     public BigDecimal getValue() {
@@ -34,5 +34,15 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public int compareTo(Money o) {
+       return this.value.compareTo(o.value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString() + "원";
     }
 }

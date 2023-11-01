@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RankTest {
     @Test
     void rankTest() {
-       assertEquals(Money.of(2_000_000_000), Rank.FIRST.getPrice());
+       assertEquals(Money.of(2_000_000_000), Rank.FIRST.getPrize());
     }
 
     @Test
